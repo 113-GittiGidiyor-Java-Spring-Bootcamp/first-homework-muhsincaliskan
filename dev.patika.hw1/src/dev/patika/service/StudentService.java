@@ -1,5 +1,6 @@
 package dev.patika.service;
 
+import dev.patika.models.Course;
 import dev.patika.models.Student;
 import dev.patika.repository.CrudRepository;
 import dev.patika.utils.EntityManagerUtils;
@@ -13,8 +14,8 @@ public class StudentService implements CrudRepository {
     }
 
     @Override
-    public Object findById(int id) {
-        return null;
+    public Student findById(int id) {
+        return  em.find(Student.class, id);;
     }
 
     @Override

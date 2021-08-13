@@ -54,7 +54,7 @@ public class SchoolAPIClient {
             Tested finding all vehicles of a customer
          */
         System.out.println("Vehicles of customer : " );
-        List<Vehicle> vehicleList = controller.findVehiclesOfCustomer(321562365123L);
+        List<Vehicle> vehicleList = studentController.findVehiclesOfCustomer(321562365123L);
 
         for (int i = 0; i < vehicleList.size(); i++) {
             System.out.println((i+1) + " --> " + vehicleList.get(i).getV_model());
