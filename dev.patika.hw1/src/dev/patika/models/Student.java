@@ -1,14 +1,20 @@
 package dev.patika.models;
+import javax.persistence.*;
 
 import java.util.Date;
+import java.util.List;
 import java.util.Objects;
-
+@Entity
 public class Student {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int id;
     private String name;
     private String address;
     private String gender;
     private Date birthDate;
-
+    @ManyToMany(mappedBy = "students")
+    private List<Course> courseList;
     public Student() {
     }
 
@@ -17,6 +23,14 @@ public class Student {
         this.address = address;
         this.gender = gender;
         this.birthDate = birthDate;
+    }
+
+    public List<Course> getCourseList() {
+        return courseList;
+    }
+
+    public void setCourseList(List<Course> courseList) {
+        this.courseList = courseList;
     }
 
     public String getName() {

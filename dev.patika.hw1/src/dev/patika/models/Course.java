@@ -1,12 +1,25 @@
 package dev.patika.models;
 
+import javax.persistence.*;
+import java.util.List;
 import java.util.Objects;
-
+@Entity
 public class Course {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int id;
+
     private String courseName;
     private String courseCode;
     private Number creditScore;
 
+
+
+    @ManyToOne
+    private Instructor instructor;
+    @ManyToMany
+    private List<Student> studentList;
     public Course() {
     }
 
@@ -15,7 +28,21 @@ public class Course {
         this.courseCode = courseCode;
         this.creditScore = creditScore;
     }
+    public Instructor getInstructor() {
+        return instructor;
+    }
 
+    public void setInstructor(Instructor instructor) {
+        this.instructor = instructor;
+    }
+
+    public List<Student> getStudentList() {
+        return studentList;
+    }
+
+    public void setStudentList(List<Student> studentList) {
+        this.studentList = studentList;
+    }
     public String getCourseName() {
         return courseName;
     }

@@ -1,18 +1,33 @@
 package dev.patika.models;
 
+import javax.persistence.*;
+import java.util.List;
 import java.util.Objects;
-
+@Entity
+@Inheritance(strategy = InheritanceType.JOINED)
 public class Instructor {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int id;
     private String name;
     private String address;
     private Number phoneNumber;
-
+    @OneToMany()
+    private List<Course> courseList;
     public Instructor() {}
 
     public Instructor(String name, String address, Number phoneNumber) {
         this.name = name;
         this.address = address;
         this.phoneNumber = phoneNumber;
+    }
+
+    public List<Course> getCourseList() {
+        return courseList;
+    }
+
+    public void setCourseList(List<Course> courseList) {
+        this.courseList = courseList;
     }
 
     public String getName() {
