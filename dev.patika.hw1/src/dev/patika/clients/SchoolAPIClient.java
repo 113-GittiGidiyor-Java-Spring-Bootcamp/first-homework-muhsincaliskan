@@ -6,8 +6,10 @@ import dev.patika.controllers.StudentController;
 import dev.patika.models.*;
 import dev.patika.utils.EntityManagerUtils;
 
+import javax.persistence.EntityManager;
 import java.time.LocalDate;
 import java.time.Month;
+import java.util.Date;
 import java.util.List;
 
 public class SchoolAPIClient {
@@ -25,13 +27,7 @@ public class SchoolAPIClient {
         /*
             Tested saving new customer
          */
-        // Customer customer4 = new Customer("Aleyna Kütük", "Istanbul", 6452545241L );
-        // controller.saveCustomer(customer4);
-
-        /*
-            Tested delete a customer
-         */
-        // controller.deleteCustomer(6452545241L);
+         Student newStudent = new Student("Hoca5", "istanbul","Male", new Date(1996, 1, 6) );
 
         /*
             Tested finding all data
@@ -51,15 +47,13 @@ public class SchoolAPIClient {
 
 
          /*
-            Tested finding all vehicles of a customer
+            Tested finding course instructor
          */
-        System.out.println("Vehicles of customer : " );
-        List<Vehicle> vehicleList = studentController.findVehiclesOfCustomer(321562365123L);
 
-        for (int i = 0; i < vehicleList.size(); i++) {
-            System.out.println((i+1) + " --> " + vehicleList.get(i).getV_model());
-        }
-        // controller.findVehiclesOfCustomer(321562365123L).stream().forEach(System.out::println);
+        Instructor instructor= courseController.getInstructor(1);
+        System.out.println(instructor );
+
+
 
         System.exit(0);
     }
@@ -71,11 +65,11 @@ public class SchoolAPIClient {
 
     private static void saveTestData() {
 
-        Student student1 = new Student("Muhsin","Ankara","Male",Date(1996, 1, 6));
-        Student student2 = new Student("Ahmet","İstanbul","Male",Date(1996, 1, 1));
-        Student student3 = new Student("Volkan","Eskişehir","Male",Date(1996, 7, 4));
-        Student student4 = new Student("Furkan","İzmir","Male",Date(1996, 11, 5));
-        Student student5 = new Student("Selin","Kayseri","Male",Date(1996, 8, 9));
+        Student student1 = new Student("Muhsin","Ankara","Male",new Date(1996, 1, 6));
+        Student student2 = new Student("Ahmet","İstanbul","Male",new Date(1996, 1, 1));
+        Student student3 = new Student("Volkan","Eskişehir","Male",new Date(1996, 7, 4));
+        Student student4 = new Student("Furkan","İzmir","Male",new Date(1996, 11, 5));
+        Student student5 = new Student("Selin","Kayseri","Male",new Date(1996, 8, 9));
 
         Instructor instructor1=new PermanentInstructor("Hoca1","Ankara",123456767,4000);
         Instructor instructor2=new VisitingResearches("Hoca2","İstanbul",13566577,12345);

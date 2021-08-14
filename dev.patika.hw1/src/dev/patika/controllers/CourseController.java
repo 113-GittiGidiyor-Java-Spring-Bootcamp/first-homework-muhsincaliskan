@@ -1,6 +1,7 @@
 package dev.patika.controllers;
 
 import dev.patika.models.Course;
+import dev.patika.models.Instructor;
 import dev.patika.service.CourseService;
 
 import java.util.List;
@@ -22,11 +23,16 @@ public class CourseController {
     }
 
 
-    public void deleteCourse(long ssid){
-        courseService.deleteFromDatabase(ssid);
+    public void deleteCourse(Course course){
+        courseService.deleteFromDatabase(course);
     }
 
     public void updateCourse(Course course, int id){
         courseService.updateOnDatabase(course, id);
+    }
+    public Instructor getInstructor(int id){
+
+        return courseService.findInstructorOfCourse(id);
+
     }
 }

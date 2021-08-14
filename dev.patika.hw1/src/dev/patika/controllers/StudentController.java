@@ -17,16 +17,16 @@ public class StudentController {
     }
 
     public void saveStudent(Student student){
-        studentService.saveToDatabase(course);
+        studentService.saveToDatabase(student);
     }
 
 
-    public void deleteStudent(long ssid){
-        studentService.deleteFromDatabase(ssid);
+    public void deleteStudent(Student student){
+        studentService.deleteFromDatabase(student);
     }
 
     public void updateStudent(Student student, int id){
-        studentService.updateOnDatabase(course, id);
+        studentService.updateOnDatabase(student, id);
     }
 
 }

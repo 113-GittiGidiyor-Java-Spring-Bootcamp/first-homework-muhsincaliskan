@@ -1,68 +1,100 @@
 package dev.patika.service;
 
+import dev.patika.models.Course;
+import dev.patika.models.Instructor;
 import dev.patika.repository.CrudRepository;
+import dev.patika.repository.InstructorRepository;
 import dev.patika.utils.EntityManagerUtils;
 
+import javax.persistence.EntityManager;
 import java.util.List;
 
-public class InstructorService implements CrudRepository {
+public class InstructorService implements CrudRepository<Instructor>, InstructorRepository {
+    EntityManager entityManager = EntityManagerUtils.getEntityManager("mysqlPU");
     @Override
-    public List findAll() {
-        return null;
-    }
-
-    @Override
-    public Object findById(int id) {
-        return null;
-    }
-
-    @Override
-    public void saveToDatabase(Object object) {
+    public List<Instructor> findAll() {
+        return entityManager.createQuery("from Instructor", Instructor.class).getResultList();
 
     }
 
     @Override
-    public void deleteFromDatabase(Object object) {
+    public Instructor findById(int id) {
+        return entityManager.find(Instructor.class, id);
+
+    }
+
+    @Override
+    public void saveToDatabase(Instructor instructor) {
         try {
-            em.getTransaction().begin();
+            entityManager.getTransaction().begin();
+            entityManager.persist(instructor);
+            entityManager.getTransaction().commit();
+        }catch (Exception e){
+            entityManager.getTransaction().rollback();
+        }finally {
+            EntityManagerUtils.closeEntityManager(entityManager);
+        }
+    }
 
-            Customer foundCustomer = em.createQuery("from Customer c WHERE c.ssid =:ssid", Customer.class).setParameter("ssid", customer.getSsid()).getSingleResult();
-            em.remove(foundCustomer);
+    @Override
+    public void deleteFromDatabase(Instructor instructor) {
+        try {
+            entityManager.getTransaction().begin();
 
-            em.getTransaction().commit();
+            Instructor foundInstructor = entityManager.createQuery("from Instructor i WHERE i.name =:name", Instructor.class).setParameter("name", instructor.getName()).getSingleResult();
+            entityManager.remove(foundInstructor);
+
+            entityManager.getTransaction().commit();
         } catch (Exception e) {
-            em.getTransaction().rollback();
+            entityManager.getTransaction().rollback();
         } finally {
-            EntityManagerUtils.closeEntityManager(em);
+            EntityManagerUtils.closeEntityManager(entityManager);
         } try{
-            em.getTransaction().begin();
-            em.persist(customer);
-            em.getTransaction().commit();
+            entityManager.getTransaction().begin();
+            entityManager.persist(instructor);
+            entityManager.getTransaction().commit();
         } catch (Exception e) {
-            em.getTransaction().rollback();
+            entityManager.getTransaction().rollback();
         } finally {
-            EntityManagerUtils.closeEntityManager(em);
+            EntityManagerUtils.closeEntityManager(entityManager);
         }
     }
 
     @Override
-    public void deleteFromDatabase(int id) {
+    public void updateOnDatabase(Instructor instructor, int id) {
         try {
-            em.getTransaction().begin();
-
-            Customer foundCustomer = em.find(Customer.class, id);
-            em.remove(foundCustomer);
-
-            em.getTransaction().commit();
-        } catch (Exception e) {
-            em.getTransaction().rollback();
-        } finally {
-            EntityManagerUtils.closeEntityManager(em);
+            entityManager.getTransaction().begin();
+            Instructor foundInstructor = entityManager.find(Instructor.class,id);
+            foundInstructor.setName(instructor.getName());
+            foundInstructor.setAddress(instructor.getAddress());
+            foundInstructor.setPhoneNumber(instructor.getPhoneNumber());
+            entityManager.merge(foundInstructor);
+            entityManager.getTransaction().commit();
+        }catch (Exception e){
+            entityManager.getTransaction().rollback();
+        }finally {
+            EntityManagerUtils.closeEntityManager(entityManager);
         }
     }
 
     @Override
-    public void updateOnDatabase(Object object, int id) {
+    public void deleteInstructorFromDatabase(int id) {
+        try {
+            entityManager.getTransaction().begin();
 
+            Instructor foundInstructor = entityManager.find(Instructor.class, id);
+            entityManager.remove(foundInstructor);
+
+            entityManager.getTransaction().commit();
+        } catch (Exception e) {
+            entityManager.getTransaction().rollback();
+        } finally {
+            EntityManagerUtils.closeEntityManager(entityManager);
+        }
+    }
+
+    @Override
+    public List<Course> findCoursesOfInstructor(int id) {
+        return findById(id).getCourseList();
     }
 }
