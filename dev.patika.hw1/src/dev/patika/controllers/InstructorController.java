@@ -21,8 +21,8 @@ public class InstructorController {
     }
 
 
-    public void deleteInstructor(long ssid){
-        instructorService.deleteFromDatabase(ssid);
+    public void deleteInstructor(Instructor instructor){
+        instructorService.deleteFromDatabase(instructor);
     }
 
     public void updateInstructor(Instructor instructor, int id){
